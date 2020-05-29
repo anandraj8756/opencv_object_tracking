@@ -1,0 +1,64 @@
+#!/Users/macbook/Desktop/CrowdCounting/myenv/bin/python3
+# vim:ts=4:sw=4:ft=python:fileencoding=utf-8
+# Copyright © 2017 Carl Chenet <carl.chenet@ohmytux.com>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+from getpass import getpass
+from os import getcwd
+from mastodon import Mastodon
+from mastodon.Mastodon import MastodonIllegalArgumentError
+import sys
+
+print('\nThis app generates Mastodon app credentials needed by Boost.\nboost_clientcred.txt and boost_usercred.txt will be written in the current dir {cwd}.\nOne connection is initiated to create the app.\nYour password is *not* stored.\n'.format(cwd=getcwd()))
+
+# get the instance
+instance = input('Mastodon instance url (defaults to https://mastodon.social):')
+if not instance:
+    instance = 'https://mastodon.social'
+elif not instance.startswith('http'):
+    instance = ''.join(['https://', instance])
+
+# get the username
+userok = False
+while not userok:
+    user = input('Mastodon login:')
+    if not user:
+        print('Your Mastodon username can not be empty')
+        userok = False
+    elif '@' not in user or '.' not in user:
+        print('Your Mastodon username should be an email')
+        userok = False
+    else:
+        userok = True
+
+# get the password
+password = getpass(prompt='Mastodon password:')
+Mastodon.create_app(
+     'boost',
+      api_base_url=instance,
+      to_file = '{cwd}/boost_clientcred.txt'.format(cwd=getcwd())
+)
+mastodon = Mastodon(client_id = '{cwd}/boost_clientcred.txt'.format(cwd=getcwd()),
+                    api_base_url=instance)
+try:
+    mastodon.log_in(
+        user,
+        password,
+        to_file = '{cwd}/boost_usercred.txt'.format(cwd=getcwd())
+    )
+except MastodonIllegalArgumentError as err:
+    print(err)
+    sys.exit('\nMy guess is bad login/password\n')
+print('The boost app was added to your preferences=>authorized apps page')
+sys.exit(0)
