@@ -11,13 +11,13 @@ In this repository track the object what is speed of object frame per second(FPS
 you can replace csrt algorithm with another because in Opencv total seven algorithm exits:
 <br>
 
-Use CSRT when you need higher object tracking accuracy and can tolerate slower FPS throughput
+>Use CSRT when you need higher object tracking accuracy and can tolerate slower FPS throughput
 <br>
 
-Use KCF when you need faster FPS throughput but can handle slightly lower object tracking accuracy
+>Use KCF when you need faster FPS throughput but can handle slightly lower object tracking accuracy
 <br>
 
-Use MOSSE when you need pure speed
+>Use MOSSE when you need pure speed
 <br>
 
 
