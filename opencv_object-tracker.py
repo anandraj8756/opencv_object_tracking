@@ -43,7 +43,7 @@ initBB = None
 
  #if video path is not pass then open automatic web cam
 if not args.get("video", False):
-    print("[INFO] starting video stream....")
+    print("starting video stream....")
     vs = VideoStream(src=0).start()
     time.sleep(1.0)
 
@@ -61,7 +61,7 @@ while True:
         break
 
     #resize the our frame
-    #frame = imutils.resize(frame, width=500)
+  #  frame = imutils.resize(frame, width=500)
     (H, W) = frame.shape[:2]
 
 
@@ -98,7 +98,7 @@ while True:
     if key == ord("s"):
         initBB = cv2.selectROI("Frame", frame, fromCenter=False, showCrosshair=True)
 
-        tracker.init(frmae, initBB)
+        tracker.init(frame, initBB)
         fps = FPS().start()
 
     elif key == ord("q"):
@@ -109,7 +109,7 @@ if not args.get("video", False):
 
 
 else:
-    vs.relase()
+    vs.release()
 
 cv2.destroyAllWindows()    
 
