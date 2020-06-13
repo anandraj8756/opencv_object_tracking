@@ -5,7 +5,7 @@ In this repository track the object what is speed of object frame per second(FPS
 
  run the progaram go to the terminal and type:
  <br>
- python opencv_object-tracker.py  --video 02.mp4 --tracker csrt
+ > python opencv_object-tracker.py  --video 02.mp4 --tracker csrt
  <br>
  
 you can replace csrt algorithm with another because in Opencv total seven algorithm exits:
